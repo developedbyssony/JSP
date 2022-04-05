@@ -1,3 +1,5 @@
 1647944710869	Delete element
 1647947614991	Rename resource 'hello.jsp'
 1647947732426	Rename resource 'hello.html'
+1648215186418	Move 'req_form.jsp' to 'request'
+1648215260379	Move 'tag_quiz4.jsp' to 'jsptag'
