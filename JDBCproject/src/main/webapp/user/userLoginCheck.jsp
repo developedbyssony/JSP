@@ -1,3 +1,4 @@
+<%@page import="com.ict.domain.UserDAO"%>
 <%@page import="com.ict.domain.UserVO"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -9,15 +10,32 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	// 1. 전달되는 데이터를 받으면 
-	String uid = request.getParameter("userid");
-	String upw = request.getParameter("userpw");
-	// 2. db 연동
+	String userId = request.getParameter("userid");
+	String userPw = request.getParameter("userpw");
+	
+	// 2. 추후 DB에서 꺼낸 아이디와 패스워드를 저장할 변수
+	String dbId = null;
+	String dbPw = null;
+	
+	// 3. DAO를 이용한 로그인 로직으로 수정해주세요.
+	UserDAO dao = new UserDAO(); // 사용 DB 지정
+	UserVO user = dao.getUserInfo(userId);
+	dbId = user.getUserId();
+	dbPw = user.getUserPw();
+	
+	// 폼에서 날려준 아이디 비밀번호와, DB에 저장되어 
+	if(formId != null) {
+		
+	} else {
+		
+	}
+	}
+	
 	String dbType = "com.mysql.cj.jdbc.Driver";
 	String connectUrl = "jdbc:mysql://localhost:3306/jdbcprac2?serverTimezone=UTC";
 	String connectId = "root";
 	String connectPw = "mysql1111";
 	
-	UserVO user = new UserVO();
 	ResultSet rs = null;
 	String idcheck = null;
 	String pwcheck = null;
@@ -30,12 +48,13 @@
 		pstmt.setString(1,uid);
 		rs = pstmt.executeQuery();
 		
-	if(rs.next()) { // 메모리 회수를 위해 바로 조회
+	if(rs.next()) { 
+			// 메모리 회수를 위해 바로 조회
 			// 생성된 uservo에 setter를 이용해 변수명에 맞는 자료 입력
 			user.setUserId(rs.getString(1));
 			user.setUserPw(rs.getString(2));
 			user.setUserName(rs.getString(3));
-			user.setUserEmail(rs.getString(4));
+			user.setEmail(rs.getString(4));
 			pwcheck = user.getUserPw();
 			if(upw.equals(pwcheck)) {
 				session.setAttribute("id",uid);

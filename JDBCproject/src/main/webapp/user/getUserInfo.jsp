@@ -1,3 +1,5 @@
+<%@page import="com.ict.domain.UserVO"%>
+<%@page import="com.ict.domain.UserDAO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -8,26 +10,13 @@
 	 url에 파라미터 붙여서 전달 --> 
 <%
 	request.setCharacterEncoding("utf-8");
-	// 1. useid라는 이름으로 전달되는 데이터를 받으면 (request.get?????)
-	String uid = request.getParameter("userid");
-	// 2. db 연동
-	String dbType = "com.mysql.cj.jdbc.Driver";
-	String connectUrl = "jdbc:mysql://localhost:3306/jdbcprac2?serverTimezone=UTC";
-	String connectId = "root";
-	String connectPw = "mysql1111";
-	
-	ResultSet rs = null;
-		
-	try {
-		Class.forName(dbType); 
-		Connection con = DriverManager.getConnection(connectUrl,connectId,connectPw); 
-		String sql = "SELECT * FROM userinfo WHERE user_id = ?";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setString(1,uid);
-		rs = pstmt.executeQuery();
-		} catch(Exception e) {
-		e.printStackTrace();
-		}	
+	// useid라는 이름으로 전달되는 데이터를 받으면 (request.get?????)
+	String userId = (String)request.getParameter("userid");
+	// DAO생성(MySQL을 쓴다고 가정)
+	UserDAO dao = new UserDAO();
+	UserVO user = dao.getUserInfo(userId);
+	System.out.println("유저 정보 확인 : " + userId);
+	out.println(userId);
 %>
 <!DOCTYPE html>
 <html>
@@ -36,25 +25,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<table>
-<tr>
-<table border = "1">
-	<thead>
-		<th>유저 아이디</th>
-		<th>유저 비밀번호</th>
-		<th>유저 이름</th>
-		<th>유저 이메일</th>
-	</thead>
-	<tbody>
-	<tr> 
-	<% while(rs.next()) { %>
-	<td> <% out.println(rs.getString(1)); %> 유저의 정보입니다. </td>
-	<td> <% out.println(rs.getString(2)); %></td>
-	<td> <% out.println(rs.getString(3)); %> </td>
-	<td>  <% out.println(rs.getString(4)); %> </td>
-	<% } %>
-	</tr> 
-	</tbody>
-</table> 
+	<!-- 유저 정보를 여기에 작성해주세요 -->
+	아이디 : <%= user.getUserId() %> <br />
+	비밀번호 : <%= user.getUserPw() %> <br />
+	이름 : <%= user.getUserName() %> <br />
+	이메일 : <%= user.getEmail() %> <br />
 </body>
 </html>
