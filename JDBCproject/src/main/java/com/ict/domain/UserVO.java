@@ -54,7 +54,7 @@ public class UserVO {
 	private String connectId = "root";
 	private String connectPw = "mysql";
 	
-	public UserVO getUserInfo(String userId) {
+	public UserVO getUserInfo(String userId) { // getUserInfo 메서드 안에 파라미터를 요구
 		// try 블럭 진입 전에 .close()로 닫는 요소들을
 		// 모두 선언해주도록 코드를 고칩니다.
 		Connection con = null;

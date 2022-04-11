@@ -22,52 +22,9 @@
 	UserVO user = dao.getUserInfo(userId);
 	dbId = user.getUserId();
 	dbPw = user.getUserPw();
-	
-	// 폼에서 날려준 아이디 비밀번호와, DB에 저장되어 
-	if(formId != null) {
-		
-	} else {
-		
-	}
-	}
-	
-	String dbType = "com.mysql.cj.jdbc.Driver";
-	String connectUrl = "jdbc:mysql://localhost:3306/jdbcprac2?serverTimezone=UTC";
-	String connectId = "root";
-	String connectPw = "mysql1111";
-	
-	ResultSet rs = null;
-	String idcheck = null;
-	String pwcheck = null;
-		
-	try {
-		Class.forName(dbType); 
-		Connection con = DriverManager.getConnection(connectUrl,connectId,connectPw); 
-		String sql = "SELECT * FROM userinfo WHERE user_id = ?";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setString(1,uid);
-		rs = pstmt.executeQuery();
-		
-	if(rs.next()) { 
-			// 메모리 회수를 위해 바로 조회
-			// 생성된 uservo에 setter를 이용해 변수명에 맞는 자료 입력
-			user.setUserId(rs.getString(1));
-			user.setUserPw(rs.getString(2));
-			user.setUserName(rs.getString(3));
-			user.setEmail(rs.getString(4));
-			pwcheck = user.getUserPw();
-			if(upw.equals(pwcheck)) {
-				session.setAttribute("id",uid);
-				response.sendRedirect("http://localhost:8080/JDBCProject/user/delete/loginWelcome.jsp?userid=" + uid);
-		} else {			
-			response.sendRedirect("userPwFail.jsp");
-		}} else {// rs.next()가 false라는 것은 db에 해당 아이디가 존재하지 않는 것이므로 아이디 없음 페이지
-			response.sendRedirect("userIdFail.jsp");
-		}
-		rs.close(); // Resultset, Connection, PreparedStatement, close()로 닫을 수 있음 
-		} catch(Exception e) {
-		e.printStackTrace();
-		}	
+	response.sendRedirect("loginWelcome.jsp");
+	// 세션 발급 코드 작성
+	session.setAttribute("id",userId);
 %>
 <html>
 <head>

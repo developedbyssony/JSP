@@ -13,9 +13,10 @@
 	// useid라는 이름으로 전달되는 데이터를 받으면 (request.get?????)
 	String userId = (String)request.getParameter("userid");
 	// DAO생성(MySQL을 쓴다고 가정)
-	UserDAO dao = new UserDAO();
-	UserVO user = dao.getUserInfo(userId);
-	System.out.println("유저 정보 확인 : " + userId);
+	UserDAO dao = new UserDAO(); //생성과 동시에 db타입까지 호출
+	UserVO user = dao.getUserInfo(userId); 
+	// List<UserVO> userList의 우변에다가 치킨배달하듯이 가져다놔주기!
+	System.out.println("유저 정보 확인 : " + user);
 	out.println(userId);
 %>
 <!DOCTYPE html>
