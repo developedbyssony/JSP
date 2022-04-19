@@ -7,7 +7,7 @@
 <%@page import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
+<% 
 	UserDAO dao = new UserDAO(); //생성과 동시에 db타입까지 호출
 	List<UserVO> userList = dao.getAllUserList(); 
 	// 1) dao 클래스 안에 return 구문 작성
